@@ -25,8 +25,8 @@
 
   * Check your setup
     `kubectl config current-context`
-    # You should see something like: gke_<your-project-id>_<yourZone>_<clusterName>
-    
+     You should see something like: `gke_<your-project-id>_<yourZone>_<clusterName>`
+    
   [Install Helm](https://docs.helm.sh/using_helm/#installing-helm)
   
   * Clone our repository
@@ -35,7 +35,7 @@
   
   * Get your password
     `gcloud container clusters describe <clusterName> --zone <yourZone> | grep pass`
-    # take note of your password here to use on next steps
+    take note of your password here to use on next steps
     
   * Setup RBAC
     `kubectl create serviceaccount --namespace kube-system tiller`
