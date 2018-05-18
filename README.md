@@ -38,8 +38,9 @@ A good introduction for Helm by Amy Chen can be found [here](https://youtu.be/vQ
     
     `kubectl config current-context`
     
-     You should see something like: `gke_<your-project-id>_<yourZone>_<clusterName>`
+     You should see something like: `gke_<your-project-id>_<yourZone>_<clusterName>` 
     
+    
   [Install Helm](https://docs.helm.sh/using_helm/#installing-helm)
   
   * Clone our repository
