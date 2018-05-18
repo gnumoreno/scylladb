@@ -64,19 +64,19 @@ A good introduction for Helm by Amy Chen can be found [here](https://youtu.be/vQ
     
     `kubectl --username=admin --password=<password> create -f scylladb-gke/cluster-admin.yaml`
     
-  * Install the helm chart
+  * Install the helm chart 
     
     `helm install scylladb-gke` 
     
-    This is going to install a new helm release with a random name. We will use the release name on the next steps
+    This is going to install a new helm release with a random name. We will use the release name on the next steps.
     
-  * Get the name of your helm release
+  * Get the name of your helm release 
     
-    `helm list`
+    `helm list` 
     
   * Check the status 
-    
-    `helm status <releaseName>`
+    
+    `helm status <releaseName>` 
     
   * Check your scylla cluster 
     
