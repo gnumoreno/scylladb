@@ -16,4 +16,5 @@ sources:
   - https://en.wikipedia.org/wiki/Scylla_(database)
 maintainers:
   - name: gnumoreno
-  - email: moreno@scylladb.com
+    email: moreno@scylladb.com
+    url: https://github.com/gnumoreno
