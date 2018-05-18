@@ -6,7 +6,7 @@ Helm uses a packaging format called charts. A chart is a collection of files tha
 
 Helm Charts deploys all the kubernetes entities in a ordered fashion wrapping them together in a RELEASE. In addition to that you also get versioning control allowing you to upgrade your release and rolling back changes.
 
-A good introduction for Helm by Amy Chen can be found [here](https://youtu.be/vQX5nokoqrQ)
+A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu.be/vQX5nokoqrQ)
 
 ## Running on GKE:
   
@@ -20,7 +20,7 @@ A good introduction for Helm by Amy Chen can be found [here](https://youtu.be/vQ
     
     `gcloud components install kubectl`
 
-  * Create your cluster on GKE [How do I find my project id on GCP?](https://cloud.google.com/resource-manager/docs/creating-managing-projects?visit_id=1-636622601155195003-3404293793&rd=1#identifying_projects)
+  * Create your cluster on GKE. [How do I find my project id on GCP?](https://cloud.google.com/resource-manager/docs/creating-managing-projects?visit_id=1-636622601155195003-3404293793&rd=1#identifying_projects)
     
     `https://console.cloud.google.com/kubernetes/add?<your-project-id>`
 
