@@ -68,7 +68,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
   * Install the helm chart 
     
-    `helm install scylladb-gke` 
+    `helm install scylladb` 
     
     This is going to install a new helm release with a random name. We will use the release name on the next steps.
     
@@ -88,7 +88,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
   * Grow your cluster by upgrading your Release - adding 2 more nodes. This will update the REVISION number on your release 
     
-    `helm upgrade --set replicaCount=5, <releaseName> scylladb-gke/` 
+    `helm upgrade --set replicaCount=5, <releaseName> scylladb/` 
     
     `helm history <releaseName>`
     
@@ -96,7 +96,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
 
   * Shrink your cluster by upgrading your Release - removing one node
     
-    `helm upgrade --set replicaCount=4, <releaseName> scylladb-gke/` 
+    `helm upgrade --set replicaCount=4, <releaseName> scylladb/` 
     
     `helm history <releaseName>`
     
@@ -104,7 +104,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
   * Shrink your cluster by rolling back to REVISION 1 - removing another node
     
-    `helm rollback alliterating-lion 1` 
+    `helm rollback <releaseName> 1` 
     
     `helm history <releaseName>`
     
