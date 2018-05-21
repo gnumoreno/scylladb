@@ -20,7 +20,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
     `gcloud components install kubectl`
 
-  * Create your cluster on GKE. [How do I find my project id on GCP?](https://cloud.google.com/resource-manager/docs/creating-managing-projects?visit_id=1-636622601155195003-3404293793&rd=1#identifying_projects)
+  * From your GCE  web console create a cluster on GKE. [How do I find my project id on GCP?](https://cloud.google.com/resource-manager/docs/creating-managing-projects?visit_id=1-636622601155195003-3404293793&rd=1#identifying_projects)
     
     `https://console.cloud.google.com/kubernetes/add?<your-project-id>`
 
