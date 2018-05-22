@@ -44,13 +44,13 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
     `kubectl config current-context`
     
-     You should see something like: `gke_$PROJECT_$ZONE>_$CLUSTER_NAME` 
+     You should see something like: `gke_$PROJECT_$ZONE_$CLUSTER_NAME` 
     
   * Clone our repository
     
     `git clone https://github.com/scylladb/scylla-code-samples.git`
     
-    `cd scylla-code-samples/k8s-helm_chart`
+    `cd scylla-code-samples/k8s-helm-chart`
     
   * [Install Helm](https://docs.helm.sh/using_helm/#installing-helm)
   
@@ -95,9 +95,9 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
   * Check your scylla cluster 
     
-    `kubectl exec -ti <some-pod-name> -- nodetool status # Check your cluster`
+    `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status # Check your cluster`
     
-    `kubectl logs <some-pod-name> # Check the logs for some pod`
+    `kubectl logs $RELEASE-scylladb-0 # Check the logs for some pod`
     
   * Grow your cluster by upgrading your Release - adding 2 more nodes. This will update the REVISION number on your release 
     
@@ -105,7 +105,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
     `helm history $RELEASE`
     
-    `kubectl exec -ti <some-pod-name> -- nodetool status`
+    `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status`
 
   * Shrink your cluster by upgrading your Release - removing one node
     
@@ -113,7 +113,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
     `helm history $RELEASE`
     
-    `kubectl exec -ti <some-pod-name> -- nodetool status`
+    `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status`
     
   * Shrink your cluster by rolling back to REVISION 1 - removing another node
     
@@ -121,7 +121,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
     `helm history $RELEASE`
     
-    `kubectl exec -ti <some-pod-name> -- nodetool status`
+    `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status`
     
   * Delete your helm release
     
