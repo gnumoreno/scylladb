@@ -92,12 +92,14 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
   * Check the status 
     
     `helm status $RELEASE` 
+    
+  ## Playing with Scylla
     
   * Check your scylla cluster 
     
     `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status # Check your cluster`
     
-    `kubectl logs $RELEASE-scylladb-0 # Check the logs for some pod`
+    `kubectl logs $RELEASE-scylladb-0 # Check the logs for 1st pod`
     
   * Grow your cluster by upgrading your Release - adding 2 more nodes. This will update the REVISION number on your release 
     
@@ -115,6 +117,16 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
     `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status`
     
+  * Playing with loads:
+  
+    `kubectl exec -ti $RELEASE-scylladb-3 -- /bin/bash`
+    
+    `nodetool decommission`
+    
+    `cassandra-stress write duration=30s -rate threads=36 -node <ip>`
+    
+  * Or you can play with our tutorial [here](https://www.scylladb.com/2017/11/30/mutant-monitoring-system-day-1/) and [here](https://www.scylladb.com/2018/01/18/mms-day-2-building-tracking-system/).
+    
   * Shrink your cluster by rolling back to REVISION 1 - removing another node
     
     `helm rollback $RELEASE 1` 
