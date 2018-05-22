@@ -1,4 +1,4 @@
-# ScyllaDB Helm Chart on GKE
+# ScyllaDB Helm Chart on Google Kubernetes Engine (GKE)
 
  ## What is Helm Charts? Why use a Helm Chart? 
   
@@ -10,7 +10,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
 
 ## Running on GKE:
   
-  [Install Google Cloud SKD](https://cloud.google.com/sdk/)
+  * [Install Google Cloud SDK](https://cloud.google.com/sdk/)
 
   * Authenticate to your GCP
     
@@ -21,38 +21,47 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     `gcloud components install kubectl`
 
   * From your GCE  web console create a cluster on GKE. [How do I find my project id on GCP?](https://cloud.google.com/resource-manager/docs/creating-managing-projects?visit_id=1-636622601155195003-3404293793&rd=1#identifying_projects)
-    
-    `https://console.cloud.google.com/kubernetes/add?<your-project-id>`
-
-    ```clusterName: helm-test
-    yourZone: us-central1-a
-    clusterVersion: 1.9.7-gke.0
-    machineType: 1vCPU 3.75GB
-    nodeImage: Container-Optimized OS (cos)
-    size: 3```
-    
+  
+  * Export some environment variables
+  
+    `export PROJECT=<your-project-id> # see step below` 
+  
+    `export CLUSTER_NAME=scylla-helm` 
+  
+    `export CLUSTER_VERSION=1.9.7-gke.1` 
+  
+    `export ZONE=us-central1-a` 
+  
+  * Deploy a GKE cluster
+  
+   `gcloud beta container --project $PROJECT clusters create $CLUSTER_NAME --zone $ZONE --username "admin" --cluster-version $CLUSTER_VERSION --machine-type "n1-standard-8" --image-type "COS" --disk-size "100"`
+    
   * Get credentials for your GKE cluster
     
-    `gcloud container clusters get-credentials <clusterName> --zone <yourZone> --project <your-project-id>`
+    `gcloud container --project $PROJECT clusters get-credentials $CLUSTER_NAME --zone $ZONE`
 
   * Check your setup
     
     `kubectl config current-context`
     
-     You should see something like: `gke_<your-project-id>_<yourZone>_<clusterName>` 
+     You should see something like: `gke_$PROJECT_$ZONE>_$CLUSTER_NAME` 
     
-    
-  [Install Helm](https://docs.helm.sh/using_helm/#installing-helm)
-  
   * Clone our repository
     
     `git clone https://github.com/scylladb/scylla-code-samples.git`
     
-    `cd scylla-code-samples`
+    `cd scylla-code-samples/k8s-helm_chart`
+    
+  * [Install Helm](https://docs.helm.sh/using_helm/#installing-helm)
   
+    Do nor forget to run helm init 
+    
+    `helm init` 
+    
+ 
   * Get your password
     
-    `gcloud container clusters describe <clusterName> --zone <yourZone> | grep pass`
+    `gcloud container clusters describe $CLUSTER_NAME --zone $ZONE | grep pass`
     
     take note of your password here to use on next steps
     
