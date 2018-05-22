@@ -121,7 +121,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
   
     `kubectl exec -ti $RELEASE-scylladb-3 -- /bin/bash`
     
-    `nodetool decommission`
+    `nodetool decommission`
     
     `cassandra-stress write duration=30s -rate threads=36 -node <ip>`
     
