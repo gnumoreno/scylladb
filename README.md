@@ -54,7 +54,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
   * [Install Helm](https://docs.helm.sh/using_helm/#installing-helm)
   
-    Do nor forget to run helm init 
+    Do not forget to run helm init 
     
     `helm init` 
     
@@ -84,10 +84,14 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
   * Get the name of your helm release 
     
     `helm list` 
+    
+  * Export an environment variable for the release
+  
+    `export RELEASE=$(helm list | grep scylladb | tr -s \t | cut -f1)`
     
   * Check the status 
     
-    `helm status <releaseName>` 
+    `helm status $RELEASE` 
     
   * Check your scylla cluster 
     
@@ -97,28 +101,28 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
   * Grow your cluster by upgrading your Release - adding 2 more nodes. This will update the REVISION number on your release 
     
-    `helm upgrade --set replicaCount=5, <releaseName> scylladb/` 
+    `helm upgrade --set replicaCount=5, $RELEASE scylladb/` 
     
-    `helm history <releaseName>`
+    `helm history $RELEASE`
     
     `kubectl exec -ti <some-pod-name> -- nodetool status`
 
   * Shrink your cluster by upgrading your Release - removing one node
     
-    `helm upgrade --set replicaCount=4, <releaseName> scylladb/` 
+    `helm upgrade --set replicaCount=4, $RELEASE scylladb/` 
     
-    `helm history <releaseName>`
+    `helm history $RELEASE`
     
     `kubectl exec -ti <some-pod-name> -- nodetool status`
     
   * Shrink your cluster by rolling back to REVISION 1 - removing another node
     
-    `helm rollback <releaseName> 1` 
+    `helm rollback $RELEASE 1` 
     
-    `helm history <releaseName>`
+    `helm history $RELEASE`
     
     `kubectl exec -ti <some-pod-name> -- nodetool status`
     
   * Delete your helm release
     
-    `helm delete <releaseName>`
+    `helm delete $RELEASE`
