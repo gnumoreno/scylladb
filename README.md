@@ -121,9 +121,10 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
   
     `kubectl exec -ti $RELEASE-scylladb-3 -- /bin/bash`
     
-    `nodetool decommission`
+    `nodetool decommission` 
     
-    `cassandra-stress write duration=30s -rate threads=36 -node <ip>`
+    `cassandra-stress write duration=30s -rate threads=36 -node <ip>` 
+    
     
   * Or you can play with our tutorial [here](https://www.scylladb.com/2017/11/30/mutant-monitoring-system-day-1/) and [here](https://www.scylladb.com/2018/01/18/mms-day-2-building-tracking-system/).
     
