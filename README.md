@@ -50,8 +50,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
     `git clone https://github.com/scylladb/scylla-code-samples.git`
     
-    `cd scylla-code-samples/k8s-helm-chart`
-    
+   
   * [Install Helm](https://docs.helm.sh/using_helm/#installing-helm)
   
     Do not forget to run helm init 
@@ -71,13 +70,13 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
     `kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'`
     
-    `kubectl --username=admin --password=<password> create -f scylladb-gke/tiller-clusterrolebinding.yaml`
+    `kubectl --username=admin --password=<password> create -f helm-chart-scylla/tiller-clusterrolebinding.yaml`
     
-    `kubectl --username=admin --password=<password> create -f scylladb-gke/cluster-admin.yaml`
+    `kubectl --username=admin --password=<password> create -f helm-chart-scylla/cluster-admin.yaml`
     
   * Install the helm chart 
     
-    `helm install scylladb` 
+    `helm install helm-chart-scylla/` 
     
     This is going to install a new helm release with a random name. We will use the release name on the next steps.
     
@@ -103,7 +102,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
   * Grow your cluster by upgrading your Release - adding 2 more nodes. This will update the REVISION number on your release 
     
-    `helm upgrade --set replicaCount=5, $RELEASE scylladb/` 
+    `helm upgrade --set replicaCount=5, $RELEASE helm-chart-scylla/` 
     
     `helm history $RELEASE`
     
@@ -111,7 +110,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
 
   * Shrink your cluster by upgrading your Release - removing one node
     
-    `helm upgrade --set replicaCount=4, $RELEASE scylladb/` 
+    `helm upgrade --set replicaCount=4, $RELEASE helm-chart-scylla/` 
     
     `helm history $RELEASE`
     
