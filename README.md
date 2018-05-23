@@ -60,7 +60,7 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
  
   * Get your password
     
-    `gcloud container clusters describe $CLUSTER_NAME --zone $ZONE | grep pass`
+    `gcloud container clusters describe $CLUSTER_NAME --zone $ZONE --project $PROJECT | grep pass`
     
     take note of your password here to use on next steps
     
