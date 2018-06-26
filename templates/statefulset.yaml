@@ -21,7 +21,7 @@ spec:
       terminationGracePeriodSeconds: 120
       containers:
       - name: {{ template "scylladb.fullname" . }}
-        image: {{ .Values.image.repository }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         resources: 
 {{ toYaml .Values.resources | indent 10 }}
         ports:
