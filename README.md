@@ -24,11 +24,11 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
   
   * Export some environment variables
   
-    `export PROJECT=<your-project-id> # see step below` 
+    `export PROJECT=<your-project-id> # see step above` 
   
     `export CLUSTER_NAME=scylla-helm` 
   
-    `export CLUSTER_VERSION=1.9.7-gke.1` 
+    `export CLUSTER_VERSION=1.9.7-gke.3` 
   
     `export ZONE=us-central1-a` 
   
@@ -48,9 +48,9 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
   * Clone our repository
     
-    `git clone https://github.com/scylladb/scylla-code-samples.git`
+    `git clone https://github.com/gnumoreno/scylladb.git`
     
-   
+       
   * [Install Helm](https://docs.helm.sh/using_helm/#installing-helm)
   
     Do not forget to run helm init 
@@ -70,13 +70,13 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
     `kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'`
     
-    `kubectl --username=admin --password=<password> create -f helm-chart-scylla/tiller-clusterrolebinding.yaml`
+    `kubectl --username=admin --password=<password> create -f scylladb/tiller-clusterrolebinding.yaml`
     
-    `kubectl --username=admin --password=<password> create -f helm-chart-scylla/cluster-admin.yaml`
+    `kubectl --username=admin --password=<password> create -f scylladb/cluster-admin.yaml`
     
   * Install the helm chart 
     
-    `helm install helm-chart-scylla/` 
+    `helm install scylladb/` 
     
     This is going to install a new helm release with a random name. We will use the release name on the next steps.
     
