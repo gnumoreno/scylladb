@@ -70,13 +70,13 @@ A good introduction to Helm Charts by Amy Chen can be found [here](https://youtu
     
     `kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'`
     
-    `kubectl --username=admin --password=<password> create -f scylladbtiller-clusterrolebinding.yaml`
+    `kubectl --username=admin --password=<password> create -f scylladb/tiller-clusterrolebinding.yaml`
     
     `kubectl --username=admin --password=<password> create -f scylladb/cluster-admin.yaml`
     
   * Install the helm chart 
     
-    `helm install helm-chart-scylla/` 
+    `helm install scylladb/` 
     
     This is going to install a new helm release with a random name. We will use the release name on the next steps.
     
