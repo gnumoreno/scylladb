@@ -1,4 +1,3 @@
-
 # Pre-reqs
 
  * [Install Google Cloud SDK](https://cloud.google.com/sdk/)
@@ -59,11 +58,11 @@ helm install scylladb --namespace $whateverYouWant
    `helm status $RELEASE`
 
 
-  ## Playing with Scylla
+# Playing with Scylla
 
   * Check your scylla cluster
 
-    `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status # Check your cluster`
+    `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status # Checking cluster status through the first node`
 
     `kubectl logs $RELEASE-scylladb-0 # Check the logs for 1st pod`
 

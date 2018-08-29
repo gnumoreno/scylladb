@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "scylladb.fullname" . }}-config
+data:
+  scylla.yaml: |
+    cluster_name: {{ .Values.config.cluster_name }}
+    num_tokens: {{ .Values.config.num_tokens }}
+    data_file_directories:
+        - /var/lib/scylla/data
+    commitlog_directory: /var/lib/scylla/commitlog
+    commitlog_sync: periodic
+    commitlog_sync_period_in_ms: 10000
+    commitlog_segment_size_in_mb: 32
+    seed_provider:
+        # Addresses of hosts that are deemed contact points. 
+        # Scylla nodes use this list of hosts to find each other and learn
+        # the topology of the ring.  You must change this if you are running
+        # multiple nodes!
+        - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+          parameters:
+              # seeds is actually a comma-delimited list of addresses.
+              # Ex: "<ip1>,<ip2>,<ip3>"
+              - seeds: "127.0.0.1"
+    listen_address: localhost
+    native_transport_port: {{ .Values.service.cqlPort }}
+    read_request_timeout_in_ms: {{ .Values.config.read_request_timeout_in_ms }}
+    write_request_timeout_in_ms: {{ .Values.config.write_request_timeout_in_ms }}
+    endpoint_snitch: {{ .Values.config.endpoint_snitch }}
+    rpc_address: 0.0.0.0
+    rpc_port: {{ .Values.service.thriftPort }}
+    api_port: {{ .Values.service.restPort }}
+    api_address: 127.0.0.1
+    batch_size_warn_threshold_in_kb: 5
+    batch_size_fail_threshold_in_kb: 50
+    partitioner: org.apache.cassandra.dht.Murmur3Partitioner
+    commitlog_total_space_in_mb: -1
+    murmur3_partitioner_ignore_msb_bits: 12
+    api_ui_dir: /usr/lib/scylla/swagger-ui/dist/
+    api_doc_dir: /usr/lib/scylla/api/api-doc/
+    auto_bootstrap: false

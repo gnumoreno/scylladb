@@ -4,6 +4,7 @@ metadata:
   name: {{ template "scylladb.fullname" . }}
   labels:
     app: {{ template "scylladb.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
@@ -18,6 +19,7 @@ spec:
         app: {{ template "scylladb.name" . }}
         release: {{ .Release.Name }}
     spec:
+#      hostNetwork: true
       terminationGracePeriodSeconds: 120
       containers:
       - name: {{ template "scylladb.fullname" . }}
@@ -26,13 +28,21 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         ports:
           - containerPort: {{ .Values.service.cqlPort }}
+            hostPort: {{ .Values.service.cqlPort }}
           - containerPort: {{ .Values.service.internodePort }}
+            hostPort: {{ .Values.service.internodePort }}
           - containerPort: {{ .Values.service.sslinternodePort }}
+            hostPort: {{ .Values.service.sslinternodePort }}
           - containerPort: {{ .Values.service.jmxPort }}
+            hostPort: {{ .Values.service.jmxPort }}
           - containerPort: {{ .Values.service.restPort }}
+            hostPort: {{ .Values.service.restPort }}
           - containerPort: {{ .Values.service.prometheusPort }}
+            hostPort: {{ .Values.service.prometheusPort }}
           - containerPort: {{ .Values.service.nodeExporterPort }}
+            hostPort: {{ .Values.service.nodeExporterPort }}
           - containerPort: {{ .Values.service.thriftPort }}
+            hostPort: {{ .Values.service.thriftPort }}
         env:
         - name: MY_POD_NAME
           valueFrom:
@@ -44,29 +54,29 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
         args:
           - --seeds 
-          - {{ template "scylladb.fullname" . }}-0.{{ template "scylladb.fullname" . }}.default.svc.cluster.local
-          {{- if .Values.config.overprovisioned }}
-          - --overprovisioned
-          - {{ .Values.config.overprovisioned | quote }}
+          - {{ template "scylladb.fullname" . }}-0.{{ template "scylladb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+          {{- if and (eq .Values.environment.type "GKE") (.Values.environment.public_access) }}
+          - --broadcast-rpc-address
+          - {{ .Values.command.gcpGetPublicIP | squote }}
           {{- end }}
-          {{- if .Values.config.cpu }}
+          {{- if .Values.resources.limits.cpu }}
           - --smp
-          - {{ .Values.config.cpu | quote }}
+          - {{ .Values.resources.limits.cpu | quote }}
           {{- end }}
-          {{- if .Values.config.memory }}
+          {{- if .Values.resources.limits.memory }}
           - --memory
-          - {{ .Values.config.memory | quote }}
-          {{- end }}
-          {{- if .Values.config.endpointSnitch }}
-          - --endpoint-snitch
-          - {{ .Values.config.endpointSnitch | quote }}
+          - {{ .Values.resources.limits.memory | trimSuffix "i" | quote }}
           {{- end }}
         lifecycle:
           preStop:
             exec:
-              command: ["/usr/bin/nodetool","decommission"]
+              command: ["/usr/bin/nodetool","flush"]
         readinessProbe:
           exec:
             command: ["/bin/sh", "-c", "exec", "/opt/ready-probe.sh"]
@@ -75,6 +85,9 @@ spec:
         volumeMounts:
           - name: scylla-ready-probe
             mountPath: /opt/ready-probe.sh
+          - name: {{ template "scylladb.fullname" . }}-config
+            mountPath: /etc/scylla/scylla.yaml
+            subPath: scylla.yaml
           {{- if .Values.persistence.size }}
           - name: datadir
             mountPath: /var/lib/scylla
@@ -82,7 +95,10 @@ spec:
       volumes:
         - name: scylla-ready-probe
           configMap:
-            name: scylla 
+            name: {{ template "scylladb.fullname" . }}-probe 
+        - name: {{ template "scylladb.fullname" . }}-config
+          configMap:
+            name: {{ template "scylladb.fullname" . }}-config
   volumeClaimTemplates:
     - metadata:
         name: datadir
@@ -92,6 +108,6 @@ spec:
         resources:
           requests:
             storage: {{ .Values.persistence.size | quote }}
-        {{- if .Values.persistence.storageClass }}
-        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        {{- if (eq .Values.environment.type "GKE") }}
+        storageClassName: scylla-ssd
         {{- end }}
