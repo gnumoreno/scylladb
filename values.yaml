@@ -6,7 +6,7 @@ replicaCount: 3
 
 image:
   repository: scylladb/scylla
-  tag: 2.2.0
+  tag: 2.3.0
   pullPolicy: IfNotPresent
 
 service:
