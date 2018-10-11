@@ -14,8 +14,12 @@
   
  * Check your setup
 
-   `gcloud container --project $PROJECT clusters get-credentials $CLUSTER_NAME --zone $ZONE`
+   `gcloud container --project $PROJECT clusters get-credentials $CLUSTER_NAME --zone $ZONE` \
    `kubectl config current-context`
+
+ * Clone this repository. :)
+
+   `git clone https://github.com/gnumoreno/scylladb.git`
 
 # Using the Helm Chart on GKE
 
@@ -45,9 +49,11 @@ Available options can be checked with this command:
 
  * Check that the tiller is created
 
-   `kubectl get serviceaccount -n kube-system | grep tiller`
+   `kubectl get serviceaccount -n kube-system | grep tiller` 
 
-helm install scylladb --namespace $whateverYouWant
+ * Deploy your Scylla Cluster on K8s
+
+   `helm install scylladb --namespace $whateverYouWant`
 
  * Export an environment variable for the release
 
@@ -62,9 +68,9 @@ helm install scylladb --namespace $whateverYouWant
 
   * Check your scylla cluster
 
-    `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status # Checking cluster status through the first node`
+    `kubectl exec -ti $RELEASE-scylladb-0 -n yourNameSpace -- nodetool status # Checking cluster status through the first node`
 
-    `kubectl logs $RELEASE-scylladb-0 # Check the logs for 1st pod`
+    `kubectl logs $RELEASE-scylladb-0 -n yourNameSpace # Check the logs for 1st pod`
 
   * Grow your cluster by upgrading your Release - adding 2 more nodes. This will update the REVISION number on your release
 
@@ -72,7 +78,7 @@ helm install scylladb --namespace $whateverYouWant
 
     `helm history $RELEASE`
 
-    `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status`
+    `kubectl exec -ti $RELEASE-scylladb-0 -n yourNameSpace -- nodetool status`
 
   * Shrink your cluster by upgrading your Release - removing one node
 
@@ -80,16 +86,16 @@ helm install scylladb --namespace $whateverYouWant
 
     `helm history $RELEASE`
 
-    `kubectl exec -ti $RELEASE-scylladb-0 -- nodetool status`
+    `kubectl exec -ti $RELEASE-scylladb-0 -n yourNameSpace -- nodetool status`
 
   * Playing with loads:
+```
+    kubectl exec -ti $RELEASE-scylladb-3 -n yourNameSpace -- /bin/bash
 
-    `kubectl exec -ti $RELEASE-scylladb-3 -- /bin/bash`
+    nodetool decommission
 
-    `nodetool decommission`
-
-    `cassandra-stress write duration=30s -rate threads=36 -node <ip>`
-
+    cassandra-stress write duration=30s -rate threads=36 -node <ip>
+```
 
   * Or you can play with our tutorial [here](https://www.scylladb.com/2017/11/30/mutant-monitoring-system-day-1/) and [here](https://www.scylladb.com/2018/01/18/mms-day-2-building-tracking-system/).
 
