@@ -11,7 +11,7 @@ image:
 
 service:
   nodeport:
-    enabled: false
+    enabled: true
   cqlPort: 9042
   internodePort: 7000
   sslinternodePort: 7001
