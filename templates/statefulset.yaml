@@ -28,35 +28,35 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         ports:
           - containerPort: {{ .Values.service.cqlPort }}
-          {{ .Values.service.nodeport.enabled }}
+          {{- if .Values.service.nodeport.enabled }}
             hostPort: {{ .Values.service.cqlPort }}
           {{- end }}
           - containerPort: {{ .Values.service.internodePort }}
-          {{ .Values.service.nodeport.enabled }}
+          {{- if .Values.service.nodeport.enabled }}
             hostPort: {{ .Values.service.internodePort }}
           {{- end }}
           - containerPort: {{ .Values.service.sslinternodePort }}
-          {{ .Values.service.nodeport.enabled }}
+          {{- if .Values.service.nodeport.enabled }}
             hostPort: {{ .Values.service.sslinternodePort }}
           {{- end }}
           - containerPort: {{ .Values.service.jmxPort }}
-          {{ .Values.service.nodeport.enabled }}
+          {{- if .Values.service.nodeport.enabled }}
             hostPort: {{ .Values.service.jmxPort }}
           {{- end }}
           - containerPort: {{ .Values.service.restPort }}
-          {{ .Values.service.nodeport.enabled }}
+          {{- if .Values.service.nodeport.enabled }}
             hostPort: {{ .Values.service.restPort }}
           {{- end }}
           - containerPort: {{ .Values.service.prometheusPort }}
-          {{ .Values.service.nodeport.enabled }}
+          {{- if .Values.service.nodeport.enabled }}
             hostPort: {{ .Values.service.prometheusPort }}
           {{- end }}
           - containerPort: {{ .Values.service.nodeExporterPort }}
-          {{ .Values.service.nodeport.enabled }}
+          {{- if .Values.service.nodeport.enabled }}
             hostPort: {{ .Values.service.nodeExporterPort }}
           {{- end }}
           - containerPort: {{ .Values.service.thriftPort }}
-          {{ .Values.service.nodeport.enabled }}
+          {{- if .Values.service.nodeport.enabled }}
             hostPort: {{ .Values.service.thriftPort }}
           {{- end }}
         env:
